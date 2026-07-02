@@ -1,0 +1,27 @@
+{
+  "name": "onda-live",
+  "version": "1.0.0",
+  "description": "ONDA — plataforma de subastas en vivo de coleccionables. Video real (LiveKit), subastas y chat en tiempo real, pagos con Stripe y Mercado Pago.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "seed": "node server/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "livekit-server-sdk": "^2.7.0",
+    "mercadopago": "^2.0.15",
+    "nanoid": "^5.0.7",
+    "socket.io": "^4.7.5",
+    "stripe": "^16.12.0"
+  }
+}
