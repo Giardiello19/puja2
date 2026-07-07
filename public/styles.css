@@ -752,25 +752,76 @@ img.auction-thumb{
 }
 
 /* --- Controles del creador transmitiendo --- */
+/* Panel anclado justo encima de la barra de chat, sin chocar con nada. */
 .bcast-controls{
-  position:absolute; left:12px; right:12px; bottom:96px; z-index:6;
+  position:absolute; left:12px; right:12px;
+  bottom:calc(var(--safe-bottom) + 64px);
+  z-index:11;
   display:flex; flex-direction:column; gap:8px;
-  padding:12px;
-  background:rgba(11,11,15,.78); backdrop-filter:blur(10px);
+  padding:10px 12px 12px;
+  background:rgba(12,9,18,.88); backdrop-filter:blur(12px);
   border:1px solid var(--line); border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.45);
 }
-.bcast-row{ display:flex; gap:8px; }
-.bcast-input{
+.bcast-head{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.bcast-title{
+  font-family:var(--f-mono); font-size:10px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--bone-dim);
+}
+.bcast-end{
+  padding:5px 12px;
+  background:transparent; color:var(--danger);
+  border:1px solid rgba(255,82,82,.45); border-radius:999px;
+  font-family:var(--f-body); font-size:12px; font-weight:600;
+  cursor:pointer; transition:background .15s;
+}
+.bcast-end:active{ background:rgba(255,82,82,.15); }
+.bcast-row{ display:flex; gap:8px; align-items:flex-end; }
+.bcast-field{
   flex:1; min-width:0;
-  padding:11px 12px;
+  display:flex; flex-direction:column; gap:4px;
+}
+.bcast-field > span{
+  font-family:var(--f-mono); font-size:9px; font-weight:700;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:var(--bone-dim); padding-left:2px;
+}
+.bcast-input{
+  width:100%; min-width:0; height:42px;
+  padding:0 12px;
   background:var(--ink-3); color:var(--bone);
   border:1px solid var(--line); border-radius:11px;
   font-family:var(--f-body); font-size:14px;
 }
 .bcast-input::placeholder{ color:var(--bone-dim); }
 .bcast-input:focus{ outline:none; border-color:var(--violet); }
-.bcast-num{ flex:1; font-family:var(--f-mono); }
-.bcast-start{ flex:0 0 auto; white-space:nowrap; }
+.bcast-num{ font-family:var(--f-mono); font-size:15px; }
+/* sin flechitas de spinner en los números */
+.bcast-num::-webkit-outer-spin-button,
+.bcast-num::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.bcast-num[type=number]{ -moz-appearance:textfield; appearance:textfield; }
+.bcast-start{
+  flex:0 0 auto; height:42px;
+  padding:0 16px; white-space:nowrap;
+  border-radius:11px; font-size:14px;
+}
+
+/* --- Reacomodo de capas cuando el que ve es el CREADOR --- */
+/* La tarjeta de subasta sube al área superior (bajo la barra del canal)
+   y el chat flota encima del panel de controles, sin encimarse. */
+.is-bcast .auction-hud{
+  bottom:auto;
+  top:calc(var(--safe-top) + 76px);
+}
+.is-bcast .stream-chat{
+  bottom:calc(var(--safe-bottom) + 240px);
+  height:84px;
+  padding-bottom:0;
+}
+.is-bcast .float-reactions{ z-index:5; }
 
 /* Aviso para el creador (vista “vender” cuando está en vivo) */
 .creator-banner{

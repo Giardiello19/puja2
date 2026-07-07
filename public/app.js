@@ -288,15 +288,22 @@ function streamShellHTML(show, seller, isBroadcaster) {
 function broadcasterControlsHTML() {
   return `
     <div class="bcast-controls">
-      <div class="bcast-row">
-        <input class="bcast-input" id="bc-name" placeholder="Nombre del artículo (ej. Charizard ex)">
+      <div class="bcast-head">
+        <span class="bcast-title">Nueva subasta</span>
+        <button class="bcast-end" data-action="end-live">⏻ Terminar</button>
       </div>
+      <input class="bcast-input" id="bc-name" placeholder="Nombre del artículo (ej. Charizard ex)">
       <div class="bcast-row">
-        <input class="bcast-input bcast-num" id="bc-start" type="number" inputmode="numeric" placeholder="Precio inicial" value="50">
-        <input class="bcast-input bcast-num" id="bc-inc" type="number" inputmode="numeric" placeholder="Incremento" value="10">
+        <label class="bcast-field">
+          <span>Precio inicial</span>
+          <input class="bcast-input bcast-num" id="bc-start" type="number" inputmode="numeric" min="1" value="50">
+        </label>
+        <label class="bcast-field">
+          <span>Incremento</span>
+          <input class="bcast-input bcast-num" id="bc-inc" type="number" inputmode="numeric" min="1" value="10">
+        </label>
         <button class="btn btn-primary bcast-start" data-action="start-item">▶ Subastar</button>
       </div>
-      <button class="btn btn-secondary" data-action="end-live" style="margin-top:8px;">Terminar transmisión</button>
     </div>`;
 }
 
@@ -449,7 +456,7 @@ async function openBroadcaster(showId) {
   const seller = show.seller || {};
   lk.showId = showId;
 
-  const overlay = el('<div class="stream-screen" id="stream-screen"></div>');
+  const overlay = el('<div class="stream-screen is-bcast" id="stream-screen"></div>');
   overlay.innerHTML = streamShellHTML(show, seller, true);
   document.body.appendChild(overlay);
   lk.screen = overlay;
