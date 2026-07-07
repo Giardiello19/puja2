@@ -302,8 +302,8 @@ function broadcasterControlsHTML() {
           <span>Incremento</span>
           <input class="bcast-input bcast-num" id="bc-inc" type="number" inputmode="numeric" min="1" value="10">
         </label>
-        <button class="btn btn-primary bcast-start" data-action="start-item">▶ Subastar</button>
       </div>
+      <button class="btn btn-primary bcast-start" data-action="start-item">▶ Subastar</button>
     </div>`;
 }
 

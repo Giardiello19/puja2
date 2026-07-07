@@ -779,7 +779,7 @@ img.auction-thumb{
   cursor:pointer; transition:background .15s;
 }
 .bcast-end:active{ background:rgba(255,82,82,.15); }
-.bcast-row{ display:flex; gap:8px; align-items:flex-end; }
+.bcast-row{ display:flex; gap:8px; }
 .bcast-field{
   flex:1; min-width:0;
   display:flex; flex-direction:column; gap:4px;
@@ -804,9 +804,9 @@ img.auction-thumb{
 .bcast-num::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
 .bcast-num[type=number]{ -moz-appearance:textfield; appearance:textfield; }
 .bcast-start{
-  flex:0 0 auto; height:42px;
-  padding:0 16px; white-space:nowrap;
-  border-radius:11px; font-size:14px;
+  width:100%; height:46px;
+  padding:0; white-space:nowrap;
+  border-radius:11px; font-size:15px;
 }
 
 /* --- Reacomodo de capas cuando el que ve es el CREADOR --- */
@@ -817,8 +817,8 @@ img.auction-thumb{
   top:calc(var(--safe-top) + 76px);
 }
 .is-bcast .stream-chat{
-  bottom:calc(var(--safe-bottom) + 240px);
-  height:84px;
+  bottom:calc(var(--safe-bottom) + 296px);
+  height:76px;
   padding-bottom:0;
 }
 .is-bcast .float-reactions{ z-index:5; }
