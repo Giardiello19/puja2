@@ -285,6 +285,87 @@ function streamShellHTML(show, seller, isBroadcaster) {
     </div>`;
 }
 
+// Estilos del panel del creador, autoinyectados con prioridad forzada.
+// Viven aquí (y no solo en styles.css) para que el panel se vea bien
+// aunque el servidor tenga una hoja de estilos desactualizada en caché.
+function ensureBcastStyles() {
+  if (document.getElementById('bcast-style-v3')) return;
+  const st = document.createElement('style');
+  st.id = 'bcast-style-v3';
+  st.textContent = `
+  .bcast-controls{
+    position:absolute !important; left:12px !important; right:12px !important;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 66px) !important;
+    top:auto !important; z-index:14 !important;
+    display:flex !important; flex-direction:column !important; gap:10px !important;
+    padding:12px 14px 14px !important;
+    background:rgba(12,9,18,.92) !important; backdrop-filter:blur(12px) !important;
+    border:1px solid var(--line) !important; border-radius:18px !important;
+    box-shadow:0 8px 32px rgba(0,0,0,.5) !important;
+  }
+  .bcast-head{
+    display:flex !important; align-items:center !important;
+    justify-content:space-between !important;
+  }
+  .bcast-title{
+    font-family:var(--f-mono) !important; font-size:10px !important; font-weight:700 !important;
+    letter-spacing:.14em !important; text-transform:uppercase !important;
+    color:var(--bone-dim) !important;
+  }
+  .bcast-end{
+    padding:5px 12px !important;
+    background:transparent !important; color:var(--danger) !important;
+    border:1px solid rgba(255,82,82,.45) !important; border-radius:999px !important;
+    font-family:var(--f-body) !important; font-size:12px !important; font-weight:600 !important;
+    width:auto !important; flex:none !important;
+  }
+  .bcast-row{ display:flex !important; gap:10px !important; }
+  .bcast-field{
+    flex:1 1 0 !important; min-width:0 !important;
+    display:flex !important; flex-direction:column !important; gap:5px !important;
+  }
+  .bcast-field > span{
+    font-family:var(--f-mono) !important; font-size:9.5px !important; font-weight:700 !important;
+    letter-spacing:.1em !important; text-transform:uppercase !important;
+    color:var(--bone-dim) !important; padding-left:2px !important;
+  }
+  .bcast-input{
+    display:block !important; width:100% !important; min-width:0 !important;
+    height:44px !important; padding:0 12px !important; flex:none !important;
+    background:var(--ink-3) !important; color:var(--bone) !important;
+    border:1px solid var(--line) !important; border-radius:12px !important;
+    font-family:var(--f-body) !important; font-size:14px !important;
+  }
+  .bcast-input:focus{ outline:none !important; border-color:var(--violet) !important; }
+  .bcast-num{
+    font-family:var(--f-mono) !important; font-size:18px !important;
+    font-weight:700 !important; height:52px !important;
+    text-align:center !important; letter-spacing:.02em !important;
+  }
+  .bcast-num::-webkit-outer-spin-button,
+  .bcast-num::-webkit-inner-spin-button{ -webkit-appearance:none !important; margin:0 !important; }
+  .bcast-num[type=number]{ -moz-appearance:textfield !important; appearance:textfield !important; }
+  .bcast-start{
+    width:100% !important; height:48px !important; padding:0 !important;
+    flex:none !important; white-space:nowrap !important;
+    border-radius:12px !important; font-size:15px !important;
+  }
+  /* En modo creador: la tarjeta de subasta sube al área superior
+     y el chat flota arriba del panel. Nada se encima con los campos. */
+  .is-bcast .auction-hud{
+    bottom:auto !important;
+    top:calc(env(safe-area-inset-top, 0px) + 76px) !important;
+    z-index:9 !important;
+  }
+  .is-bcast .stream-chat{
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 310px) !important;
+    height:70px !important; padding-bottom:0 !important;
+  }
+  .is-bcast .float-reactions{ z-index:5 !important; }
+  `;
+  document.head.appendChild(st);
+}
+
 function broadcasterControlsHTML() {
   return `
     <div class="bcast-controls">
@@ -452,6 +533,7 @@ function closeStream() {
 // BROADCASTER (creador sale en vivo)
 // ============================================================
 async function openBroadcaster(showId) {
+  ensureBcastStyles();
   const r = await API.show(showId); const show = r.show; if (!show) return;
   const seller = show.seller || {};
   lk.showId = showId;
